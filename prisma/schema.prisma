@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MemberType {
+  single
+  family
+  sponsor
+}
+
+enum MemberStatus {
+  active
+  expired
+  blocked
+  pending
+}
+
+enum ScanResult {
+  valid
+  invalid
+  expired
+  blocked
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  scanLogs ScanLog[]
+  auditLogs AuditLog[]
+
+  @@map("admin_users")
+}
+
+model Member {
+  id             String       @id @default(cuid())
+  memberNumber   String       @unique
+  firstName      String
+  lastName       String
+  email          String  // bewusst kein @unique: Familienmitglieder können dieselbe E-Mail-Adresse nutzen
+  photoUrl       String?
+  memberType     MemberType   @default(single)
+  status         MemberStatus @default(pending)
+  joinDate       DateTime
+  expiryDate     DateTime
+  passId         String       @unique @default(cuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  claimTokens ClaimToken[]
+  scanLogs    ScanLog[]
+  mailLogs    MailLog[]
+
+  @@index([status])
+  @@index([memberNumber])
+  @@index([lastName, firstName])
+  @@map("members")
+}
+
+model ClaimToken {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  memberId  String
+  expiresAt DateTime
+  claimedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@map("claim_tokens")
+}
+
+model ScanLog {
+  id               String     @id @default(cuid())
+  memberId         String?
+  result           ScanResult
+  scannedAt        DateTime   @default(now())
+  scannedByAdminId String
+
+  member    Member?   @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  scannedBy AdminUser @relation(fields: [scannedByAdminId], references: [id])
+
+  @@index([memberId])
+  @@index([scannedAt])
+  @@map("scan_logs")
+}
+
+model MailLog {
+  id        String   @id @default(cuid())
+  memberId  String
+  type      String
+  to        String
+  subject   String
+  status    String
+  error     String?
+  sentAt    DateTime @default(now())
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId])
+  @@map("mail_logs")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  entity    String
+  entityId  String?
+  details   String?
+  createdAt DateTime @default(now())
+
+  admin AdminUser @relation(fields: [adminId], references: [id])
+
+  @@index([adminId])
+  @@index([entity, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

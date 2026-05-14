@@ -1,0 +1,50 @@
+# ─── Dependencies ──────────────────────────────────────────────────────────────
+/node_modules
+
+# ─── Next.js ───────────────────────────────────────────────────────────────────
+/.next/
+/out/
+next-env.d.ts
+
+# ─── Build ─────────────────────────────────────────────────────────────────────
+/build
+*.tsbuildinfo
+
+# ─── Environment ───────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+# .env.example is committed intentionally
+
+# ─── Prisma generated ──────────────────────────────────────────────────────────
+/src/generated/prisma
+
+# ─── Certificates & secrets (NEVER commit) ─────────────────────────────────────
+/certs/*.pem
+/certs/*.p12
+/certs/*.cer
+/certs/*.csr
+/certs/*.key
+/certs/google-sa-key.json
+
+# ─── Apple Wallet pass assets (contain branding, excluded from VCS) ────────────
+/pass-model/*.png
+
+# ─── Generated test/debug output ───────────────────────────────────────────────
+*.pkpass
+pass-preview.html
+
+# ─── Vercel ────────────────────────────────────────────────────────────────────
+.vercel
+
+# ─── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json
+
+# ─── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
