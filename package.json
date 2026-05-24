@@ -15,7 +15,8 @@
     "db:reset": "npx prisma db push --force-reset && npm run db:seed",
     "db:cleanup": "npx tsx scripts/cleanup-tokens.ts",
     "docker:up": "docker start postgres 2>/dev/null || docker run -d --name postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=galatasaray_members -p 5432:5432 postgres:16",
-    "setup": "docker compose up -d && sleep 3 && npx prisma generate && npm run db:push && npm run db:seed && npm run dev",
+    "setup": "docker compose up -d && sleep 3 && npx prisma generate && npm run db:push && npm run dev",
+    "setup:clean": "kill $(lsof -ti:3000,3001) 2>/dev/null; docker compose down -v && npm run clean && docker compose up -d && sleep 5 && npx prisma generate && npm run db:push && npm run dev",
     "fresh": "npm run clean && npm run docker:up && sleep 2 && npx prisma generate && npm run db:reset && npm run dev",
     "postinstall": "npx prisma generate"
   },
