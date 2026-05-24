@@ -43,6 +43,7 @@ npm run db:seed      # Admin + 3 Testmitglieder anlegen
 npm run db:studio    # Prisma Studio öffnen
 npm run db:reset     # DB zurücksetzen + neu seeden
 npm run db:cleanup   # Abgelaufene Claim-Tokens löschen
+npm run setup        # Starte sauber ohne Cache etc.
 ```
 
 ---
