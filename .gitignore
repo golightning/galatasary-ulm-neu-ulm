@@ -27,8 +27,9 @@ next-env.d.ts
 /certs/*.key
 /certs/google-sa-key.json
 
-# ─── Apple Wallet pass assets (contain branding, excluded from VCS) ────────────
-/pass-model/*.png
+# ─── Apple Wallet pass assets ───────────────────────────────────────────────────
+# PNG-Bilder sind Branding-Assets und werden bewusst committet (für Vercel-Deploy)
+# /pass-model/*.png
 
 # ─── Generated test/debug output ───────────────────────────────────────────────
 *.pkpass
