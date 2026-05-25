@@ -76,8 +76,22 @@ export async function ensureGenericClass() {
 
   const client = await getAuthClient();
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
   const classPayload = {
     id: classId,
+    logo: {
+      sourceUri: { uri: `${appUrl}/logo_quadratisch.png` },
+      contentDescription: {
+        defaultValue: { language: "de", value: clubName },
+      },
+    },
+    wideLogo: {
+      sourceUri: { uri: `${appUrl}/logo_breit.png` },
+      contentDescription: {
+        defaultValue: { language: "de", value: clubName },
+      },
+    },
     classTemplateInfo: {
       cardTemplateOverride: {
         cardRowTemplateInfos: [

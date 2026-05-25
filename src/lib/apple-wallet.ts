@@ -86,8 +86,7 @@ export async function generateApplePass(
       foregroundColor: "rgb(255, 255, 255)",
       backgroundColor: "rgb(227, 10, 23)",
       labelColor: "rgb(255, 255, 255)",
-      logoText:
-        process.env.NEXT_PUBLIC_CLUB_NAME || "Galatasaray Ulm/Neu-Ulm",
+      // logoText weggelassen: das logo.png enthält bereits den Schriftzug
     }
   );
 
