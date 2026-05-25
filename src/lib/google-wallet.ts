@@ -95,23 +95,25 @@ export async function ensureGenericClass() {
     classTemplateInfo: {
       cardTemplateOverride: {
         cardRowTemplateInfos: [
+          // Zeile 1: Mitgliedsnummer alleine (prominent, breit)
           {
-            twoItems: {
-              startItem: {
+            oneItem: {
+              item: {
                 firstValue: {
                   fields: [{ fieldPath: "object.textModulesData['member-number']" }],
                 },
               },
-              endItem: {
+            },
+          },
+          // Zeile 2: TYP | SEIT | BIS (3 Spalten)
+          {
+            threeItems: {
+              startItem: {
                 firstValue: {
                   fields: [{ fieldPath: "object.textModulesData['member-type']" }],
                 },
               },
-            },
-          },
-          {
-            twoItems: {
-              startItem: {
+              middleItem: {
                 firstValue: {
                   fields: [{ fieldPath: "object.textModulesData['join-date']" }],
                 },
@@ -192,7 +194,7 @@ export async function generateGoogleWalletLink(
     textModulesData: [
       {
         id: "member-number",
-        header: "NR.",
+        header: "MITGLIEDSNUMMER",
         body: params.memberNumber,
       },
       {
@@ -207,7 +209,7 @@ export async function generateGoogleWalletLink(
       },
       {
         id: "expiry-date",
-        header: "GÜLTIG BIS",
+        header: "BIS",
         body: params.expiryDate,
       },
     ],

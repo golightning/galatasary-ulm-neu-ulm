@@ -449,7 +449,7 @@ export function MemberDetail({ member }: { member: MemberWithRelations }) {
             <div className="space-y-2">
               {member.mailLogs.map((log) => (
                 <div key={log.id} className="flex items-center justify-between rounded border p-2 text-sm">
-                  <span>{log.type}</span>
+                  <span>{log.type === "invite" ? "Einladung" : log.type === "renew" ? "Verlängerung" : log.type}</span>
                   <span>{new Date(log.sentAt).toLocaleString("de-DE")}</span>
                   <Badge variant={log.status === "sent" ? "success" : "destructive"}>
                     {log.status === "sent" ? "Gesendet" : "Fehler"}

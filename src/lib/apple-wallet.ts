@@ -85,7 +85,7 @@ export async function generateApplePass(
       description: "Mitgliedsausweis",
       foregroundColor: "rgb(255, 255, 255)",
       backgroundColor: "rgb(227, 10, 23)",
-      labelColor: "rgb(255, 255, 255)",
+      labelColor: "rgb(249, 160, 27)", // Galatasaray-Gold für Labels
       // logoText weggelassen: das logo.png enthält bereits den Schriftzug
     }
   );
@@ -99,20 +99,20 @@ export async function generateApplePass(
     value: `${params.firstName} ${params.lastName}`,
   });
 
-  pass.secondaryFields.push(
-    {
-      key: "member-number",
-      label: "NR.",
-      value: params.memberNumber,
-    },
+  // Mitgliedsnummer als einzelnes Secondary-Field — prominent unter dem Namen
+  pass.secondaryFields.push({
+    key: "member-number",
+    label: "MITGLIEDSNUMMER",
+    value: params.memberNumber,
+  });
+
+  // Drei Auxiliary-Felder nebeneinander: TYP | SEIT | BIS
+  pass.auxiliaryFields.push(
     {
       key: "member-type",
       label: "TYP",
       value: params.memberType.toUpperCase(),
-    }
-  );
-
-  pass.auxiliaryFields.push(
+    },
     {
       key: "join-date",
       label: "SEIT",
@@ -120,7 +120,7 @@ export async function generateApplePass(
     },
     {
       key: "expiry-date",
-      label: "GÜLTIG BIS",
+      label: "BIS",
       value: params.expiryDate,
     }
   );
